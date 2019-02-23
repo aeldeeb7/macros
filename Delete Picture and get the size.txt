@@ -1,0 +1,58 @@
+Sub DeleteSmallPictures()
+Dim iShp As InlineShape
+    For Each iShp In ActiveDocument.InlineShapes
+        With iShp
+            If .Width = 175.5 And .Height = 38.5 Then
+                iShp.Delete
+            End If
+        End With
+    Next iShp
+End Sub
+Sub FigureInfo()
+    Dim iShapeCount As Integer
+    Dim iILShapeCount As Integer
+    Dim DocThis As Document
+    Dim J As Integer
+    Dim sTemp As String
+
+    Set DocThis = ActiveDocument
+    Documents.Add
+
+    iShapeCount = DocThis.Shapes.Count
+    If iShapeCount > 0 Then
+        Selection.TypeText Text:="Regular Shapes"
+        Selection.TypeParagraph
+    End If
+    For J = 1 To iShapeCount
+        Selection.TypeText Text:=DocThis.Shapes(J).Name
+        Selection.TypeParagraph
+        sTemp = "     Height (points): "
+        sTemp = sTemp & DocThis.Shapes(J).Height
+        Selection.TypeText Text:=sTemp
+        Selection.TypeParagraph
+        sTemp = "     Width (points): "
+        sTemp = sTemp & DocThis.Shapes(J).Width
+        Selection.TypeText Text:=sTemp
+        Selection.TypeParagraph
+        Selection.TypeParagraph
+    Next J
+
+    iILShapeCount = DocThis.InlineShapes.Count
+    If iILShapeCount > 0 Then
+        Selection.TypeText Text:="Inline Shapes"
+        Selection.TypeParagraph
+    End If
+    For J = 1 To iILShapeCount
+        Selection.TypeText Text:="Shape " & J
+        Selection.TypeParagraph
+        sTemp = "     Height (points): "
+        sTemp = sTemp & DocThis.InlineShapes(J).Height
+        Selection.TypeText Text:=sTemp
+        Selection.TypeParagraph
+        sTemp = "     Width (points): "
+        sTemp = sTemp & DocThis.InlineShapes(J).Width
+        Selection.TypeText Text:=sTemp
+        Selection.TypeParagraph
+        Selection.TypeParagraph
+    Next J
+End Sub
